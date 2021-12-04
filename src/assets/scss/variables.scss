@@ -1,10 +1,12 @@
 // Colors
+$white: #FFFFFF;
 $blue: #39ACDC;
 $red: #EC3646;
 $green: #57B93E;
 $textColor: #333;
 $placeholderColor: #AAA;
 $borderColor: #CCC;
+$borderColorDark: #979797;
 $backgroundColor: #EEE;
 
 // Fonts
@@ -13,5 +15,6 @@ $fontDefault: Arial, Helvetica, sans-serif;
 // Text sizing
 $titleTextSize: 24px;
 $labelTextSize: 12px;
+$errorTextSize: 13px;
 $headerTextSize: 18px;
 $buttonTextSize: 14px;

@@ -1,7 +1,11 @@
 @import "reset";
 @import "variables";
 
-body {
+* {
   font-family: $fontDefault;
 }
-
+.error-message {
+  color: $red;
+  font-size: $errorTextSize;
+  margin-top: 5px;
+}
