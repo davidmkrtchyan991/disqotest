@@ -1,4 +1,4 @@
-# hello-world
+# DISQO Test
 
 ## Project setup
 ```
