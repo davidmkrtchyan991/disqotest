@@ -1,4 +1,4 @@
-# disqotest
+# hello-world
 
 ## Project setup
 ```
