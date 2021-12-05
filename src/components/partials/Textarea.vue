@@ -63,6 +63,8 @@ export default {
     background-clip: padding-box;
     border: 1px solid $borderColor;
     border-radius: 0.25rem;
+    resize: none;
+    height: 100px;
     &::placeholder {
       color: $placeholderColor;
     }

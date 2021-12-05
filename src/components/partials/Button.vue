@@ -32,7 +32,7 @@ export default {
 .button-container {
   button {
     display: block;
-    padding: 0.7rem 1.3rem;
+    padding: 0.43rem 0.8rem;
     font-size: $buttonTextSize;
     line-height: 1.5;
     border-radius: 0.25rem;
@@ -41,6 +41,7 @@ export default {
       background-color: $white;
       color: $textColor;
       border: 1px solid $borderColorDark;
+      font-weight: 500;
     }
     &.success {
       background-color: $green;

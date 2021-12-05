@@ -1,8 +1,13 @@
 @import "reset";
 @import "variables";
+@import "mixins";
 
+// Global styles
 * {
   font-family: $fontDefault;
+}
+body {
+  background-color: $backgroundColor;
 }
 .error-message {
   color: $red;
