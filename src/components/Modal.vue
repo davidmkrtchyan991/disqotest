@@ -4,7 +4,12 @@
       <div class="modal"
            role="dialog">
         <div class="chart-container">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam, consequuntur dolore ducimus esse excepturi fuga hic magnam necessitatibus nisi nostrum numquam odio pariatur qui? Ex expedita officia recusandae saepe ut.
+          <LineChart name="Number of Gists" />
+          <Button value="Load More" />
+        </div>
+        <div class="chart-container">
+          <LineChart name="Number of Files" />
+          <Button value="Load More" />
         </div>
         <div class="close-button">
           <Button value="Close Stats" @click="close" />
@@ -16,11 +21,13 @@
 
 <script>
 import Button from "./partials/Button";
+import LineChart from "./partials/LineChart";
 
 export default {
   name: 'Modal',
   components: {
     Button,
+    LineChart,
   },
   methods: {
     close() {
@@ -49,14 +56,16 @@ export default {
     box-shadow: 2px 2px 20px 1px gray;
     overflow-x: auto;
     display: flex;
-    max-width: 50%;
     padding: 20px;
     border-radius: 0.5rem;
     @include breakpoint(xs) {
       max-width: 90%;
     }
     .chart-container {
+      display: flex;
+      flex-direction: column;
       flex: 1;
+      align-items: center;
     }
   }
 }

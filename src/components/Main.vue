@@ -48,7 +48,7 @@
         </div>
       </div>
     </div>
-    <Modal v-show="isModalVisible"
+    <Modal v-if="isModalVisible"
         @close="closeModal" />
   </div>
 </template>
