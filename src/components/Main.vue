@@ -5,46 +5,38 @@
       <div class="notepad-content">
         <div class="editor">
           <div class="editor-notepad-title">
-            <Input label="Notepad Title" value="" placeholder="My Notepad Title..."/>
+            <Input label="Notepad Title"
+                   value=""
+                   placeholder="My Notepad Title..."
+                   :errorMessage="notepadTitleError"
+                   v-model="notepadTitle"/>
           </div>
-          <div class="editor-notes-container">
+          <div class="editor-notes-container" v-if="notepadTitleSaved">
             <p class="editor-notes-title">My Notes</p>
             <div class="editor-notes-content">
               <div class="editor-notes-inputs-container">
-                <Input placeholder="Enter note title..."/>
-                <Textarea placeholder="Enter note..."/>
-                <Button type="success" value="Add" class="note-add-button"/>
+                <Input placeholder="Enter note title..." v-model="newNote.title" :error-message="newNoteError.title"/>
+                <Textarea placeholder="Enter note..." v-model="newNote.text" :error-message="newNoteError.text"/>
+                <Button type="success" value="Add" class="note-add-button" @click="addNotes()"/>
               </div>
               <div class="editor-notes-button-container"></div>
             </div>
-
-            <div class="editor-notes-content">
+            <div class="editor-notes-content" v-for="(note, idx) in notes" :key="idx">
               <div class="editor-notes-inputs-container">
-                <Input placeholder="Enter note title..." value="Sample note 1"/>
-                <Textarea placeholder="Enter note..." value="Sample text 1"/>
+                <Input placeholder="Enter note title..." :value="note.title"/>
+                <Textarea placeholder="Enter note..." :value="note.text"/>
               </div>
               <div class="editor-notes-button-container">
-                <Button type="danger" value="Delete"/>
+                <Button type="danger" value="Delete" @click="removeNotes(idx)"/>
               </div>
             </div>
-
-            <div class="editor-notes-content">
-              <div class="editor-notes-inputs-container">
-                <Input placeholder="Enter note title..." value="Sample note 2"/>
-                <Textarea placeholder="Enter note..." value="Sample text 2"/>
-              </div>
-              <div class="editor-notes-button-container">
-                <Button type="danger" value="Delete"/>
-              </div>
-            </div>
-
           </div>
 
         </div>
         <div class="settings">
           <Button type="primary" value="View Stats" @click="viewStats"/>
-          <Button type="info" value="Save"/>
-          <Button type="danger" value="Delete"/>
+          <Button type="info" value="Save" @click="saveNotepadTitle"/>
+          <Button type="danger" value="Delete" @click="removeNotepad"/>
         </div>
       </div>
     </div>
@@ -70,14 +62,112 @@ export default {
   data() {
     return {
       isModalVisible: false,
+      notepadTitle: '',
+      newNote: {
+        title: '',
+        text: '',
+      },
+      notes: [],
+      notepadTitleSaved: false,
+      notepadTitleError: '',
+      newNoteError: {
+        title: '',
+        text: '',
+      }
     }
   },
   methods: {
+    validate() {
+      if (!this.newNote.title) {
+        this.newNoteError.title = "Title can't be empty";
+        return false;
+      }
+      if (this.newNote.title > 255) {
+        this.newNoteError.title = "Title can't be more 255";
+        return false;
+      }
+      if (!this.newNote.text) {
+        this.newNoteError.text = "Text can't be empty";
+        return false;
+      }
+      if (this.newNote.title > 1000) {
+        this.newNoteError.text = "Text can't be more 255";
+        return false;
+      }
+      this.newNoteError = {
+        title: '',
+        text: '',
+      };
+      return true;
+    },
+    validateNotepad() {
+      if (!this.notepadTitle) {
+        this.notepadTitleError = "Can't be empty";
+        return false;
+      }
+      if (this.notepadTitle.length > 255) {
+        this.notepadTitleError = "Can't be more 255";
+        return false;
+      }
+      this.notepadTitleError = "";
+      return true;
+    },
+    saveNotepadTitle() {
+      if (!this.validateNotepad()) {
+        return;
+      }
+      const parsed = JSON.stringify(this.notepadTitle);
+      localStorage.setItem('notepad', parsed);
+      this.notepadTitleSaved = true;
+    },
+    removeNotepad() {
+      localStorage.removeItem('notepad');
+      localStorage.removeItem('notes');
+      this.notepadTitle = '';
+      this.notes = [];
+      this.notepadTitleSaved = false;
+    },
+    addNotes() {
+      if (!this.notepadTitle || !this.validate(this.newNote)) {
+        return;
+      }
+      this.notes.push(this.newNote);
+      this.newNote = {
+        title: '',
+        text: '',
+      };
+      this.saveNotes();
+    },
+    removeNotes(x) {
+      this.notes.splice(x, 1);
+      this.saveNotes();
+    },
+    saveNotes() {
+      const parsed = JSON.stringify(this.notes);
+      localStorage.setItem('notes', parsed);
+    },
     closeModal() {
       this.isModalVisible = false;
     },
     viewStats() {
       this.isModalVisible = true;
+    }
+  },
+  mounted() {
+    if (localStorage.getItem('notepad')) {
+      try {
+        this.notepadTitle = JSON.parse(localStorage.getItem('notepad'));
+        this.notepadTitleSaved = true;
+      } catch(e) {
+        localStorage.removeItem('notepad');
+      }
+    }
+    if (localStorage.getItem('notes')) {
+      try {
+        this.notes = JSON.parse(localStorage.getItem('notes'));
+      } catch(e) {
+        localStorage.removeItem('notes');
+      }
     }
   }
 }
