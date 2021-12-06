@@ -13,7 +13,7 @@
               <div class="editor-notes-inputs-container">
                 <Input placeholder="Enter note title..."/>
                 <Textarea placeholder="Enter note..."/>
-                <Button type="success" value="Add" class="note-add-button" />
+                <Button type="success" value="Add" class="note-add-button"/>
               </div>
               <div class="editor-notes-button-container"></div>
             </div>
@@ -24,7 +24,7 @@
                 <Textarea placeholder="Enter note..." value="Sample text 1"/>
               </div>
               <div class="editor-notes-button-container">
-                <Button type="danger" value="Delete" />
+                <Button type="danger" value="Delete"/>
               </div>
             </div>
 
@@ -34,7 +34,7 @@
                 <Textarea placeholder="Enter note..." value="Sample text 2"/>
               </div>
               <div class="editor-notes-button-container">
-                <Button type="danger" value="Delete" />
+                <Button type="danger" value="Delete"/>
               </div>
             </div>
 
@@ -42,9 +42,9 @@
 
         </div>
         <div class="settings">
-          <Button type="primary" value="View Stats" @click="viewStats" />
-          <Button type="info" value="Save" />
-          <Button type="danger" value="Delete" />
+          <Button type="primary" value="View Stats" @click="viewStats"/>
+          <Button type="info" value="Save"/>
+          <Button type="danger" value="Delete"/>
         </div>
       </div>
     </div>
@@ -89,10 +89,12 @@ export default {
 .notepad-container {
   max-width: 1024px;
   margin: 0 auto;
+
   .notepad-title {
     font-size: $titleTextSize;
     margin: 20px;
   }
+
   .notepad-content {
     border: 1px solid $borderColor;
     border-radius: 0.5rem;
@@ -103,24 +105,29 @@ export default {
       flex-direction: column-reverse;
       margin: 15px;
     }
+
     .editor {
       flex: 1;
+
       .editor-notepad-title {
         max-width: 50%;
         @include breakpoint(xs) {
           max-width: 100%;
         }
       }
+
       .editor-notes-title {
         font-size: $headerTextSize;
         margin: 30px 0 10px;
       }
+
       .editor-notes-content {
         display: flex;
         @include breakpoint(xs) {
           flex-direction: column;
           margin-bottom: 20px;
         }
+
         .editor-notes-inputs-container {
           flex: 1;
           margin-bottom: 20px;
@@ -128,6 +135,7 @@ export default {
             width: 100%;
           }
         }
+
         .editor-notes-button-container {
           flex: 0 0 100px;
           margin-top: 8px;
@@ -138,11 +146,13 @@ export default {
             margin-top: 0;
           }
         }
+
         .note-add-button {
           margin-top: 15px;
         }
       }
     }
+
     .settings {
       display: flex;
       flex: 0 0 300px;
