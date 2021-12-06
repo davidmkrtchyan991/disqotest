@@ -1,6 +1,7 @@
 <script>
 import { Line } from "vue-chartjs";
 import axios from "axios";
+import moment from "moment";
 
 export default {
   extends: Line,
@@ -12,20 +13,21 @@ export default {
   },
   data() {
     return {
-      gistEndpoint: 'https://api.github.com/gists/public?per_page=5&accept=application/vnd.github.v3+json',
+      gistEndpoint: 'https://api.github.com/gists/public?per_page=8&accept=application/vnd.github.v3+json',
       gistData: [],
       labels: [],
     }
   },
   methods: {
-    generateLabels() {
-      this.labels = [
-        '13:25:35',
-        '13:25:40',
-        '13:25:45',
-        '13:25:50',
-        '13:25:55',
-      ]
+    generateLabels(isoTimeVal) {
+      const newDate = new Date(isoTimeVal);
+      const newTime = newDate.getTime();
+      for (let i = 0; i < 8; i++){
+        const changeSeconds = newTime - ( i * 5000);
+        const date = new Date( +changeSeconds );
+        const withUtc = moment(date).utcOffset("+00:00");
+        this.labels.unshift(withUtc.format('H:mm:ss'));
+      }
     },
     drawChart() {
       this.renderChart(
@@ -34,14 +36,14 @@ export default {
             datasets: [
               {
                 label: "Gists",
-                data: [2, 10, 5, 9, 0, 6, 20],
+                data: [2, 10, 5, 9, 0, 6, 20, 22],
                 backgroundColor: "transparent",
                 borderColor: "rgba(1, 116, 188, 0.50)",
                 pointBackgroundColor: "rgba(171, 71, 188, 1)"
               }
             ]
           },
-          {
+  {
             responsive: true,
             maintainAspectRatio: false,
             title: {
@@ -57,7 +59,7 @@ export default {
         .then((response) => {
           if (response.data) {
             this.gistData = response.data;
-            this.generateLabels();
+            this.generateLabels(this.gistData[0].created_at);
             this.drawChart();
           }
         });

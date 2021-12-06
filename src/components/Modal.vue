@@ -56,10 +56,22 @@ export default {
     box-shadow: 2px 2px 20px 1px gray;
     overflow-x: auto;
     display: flex;
+    flex-direction: column-reverse;
     padding: 20px;
     border-radius: 0.5rem;
+    width: 65%;
+    height: 90vh;
+    min-height: 500px;
+    overflow-y: scroll;
     @include breakpoint(xs) {
       max-width: 90%;
+    }
+    .button-container {
+      display: flex;
+      justify-content: center;
+    }
+    .close-button .button-container {
+      justify-content: flex-end;
     }
     .chart-container {
       display: flex;

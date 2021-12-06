@@ -14,3 +14,12 @@ body {
   font-size: $errorTextSize;
   margin-top: 5px;
 }
+.chart-container {
+  & > div {
+    width: 90%;
+  }
+}
+// Used to fast rewrite canvas component props
+canvas {
+  width: 100% !important;
+}
